@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="index.css">
+    <title>User Profile</title>
+</head>
+
+<body>
+    <div id="container">
+        <div class="user-container">
+            <div class="container-content" id="user-image">
+                <img src="./They_actually_animated_my_story.webp" alt="No Image" srcset="">
+            </div>
+            <div class="container-content" id="user-metadata">
+                <div class="label-input-container">
+                    <label for="">Name</label>
+                    <input class="input" id="name" type="text" value="Name" oninput="handleChange()">
+                </div>
+                <div class="label-input-container">
+                    <label for="">UserName</label>
+                    <input class="input" id="username" type="text" value="UserName" oninput="handleChange()">
+                </div>
+                <div class="label-input-container">
+                    <label for="">Email</label>
+                    <input class="input" id="email" type="email" value="Email" oninput="handleChange()">
+                </div>
+            </div>
+            <div class="container-content" id="buttons">
+                <button id="btn" onclick="updateData()">Edit</button>
+            </div>
+        </div>
+    </div>
+</body>
+<script src="./index.js"></script>
+</html>
