@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: simple-user-profile-deployment
+  labels:
+    app: s-u-p
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: s-u-p
+  template:
+    metadata:
+      labels:
+        app: s-u-p
+    spec:
+      containers:
+        - name: nginx
+          image: mdsahiloss/simple-user-profile-page:1.1
+          ports:
+            - containerPort: 3000
