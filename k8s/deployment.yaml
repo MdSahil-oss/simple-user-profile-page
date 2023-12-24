@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: simple-user-profile-deployment
+  name: simple-user-profile
   labels:
     app: s-u-p
 spec:
@@ -16,6 +16,6 @@ spec:
     spec:
       containers:
         - name: nginx
-          image: mdsahiloss/simple-user-profile-page:1.1
+          image: mdsahiloss/simple-user-profile-page:latest
           ports:
             - containerPort: 3000
