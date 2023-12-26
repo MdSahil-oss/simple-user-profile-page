@@ -32,7 +32,7 @@ pipeline {
     stage('Deploying Application container to Kubernetes') {
       steps {
         script {
-          kubernetesDeploy(configs: "k8s/deployment.yaml", "k8s/service.yaml")
+          kubernetesDeploy(configs: "**/k8s/*")
         }
       }
     }
