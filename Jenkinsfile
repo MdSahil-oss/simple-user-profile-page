@@ -31,8 +31,11 @@ pipeline {
     }
     stage('Deploying Application container to Kubernetes') {
       steps {
-        script {
-          kubernetesDeploy(configs: "**/k8s/*")
+            withKubeConfig([
+                        clusterName: 'minikube',
+                        namespace: 'default'
+                        ]) {
+            sh 'kubectl apply -f ./k8s'
         }
       }
     }
