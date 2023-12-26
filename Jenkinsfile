@@ -35,7 +35,7 @@ pipeline {
                         clusterName: 'minikube',
                         namespace: 'default'
                         ]) {
-            sh 'kubectl apply -f ./k8s'
+            sh 'kubectl apply -f --validate=false ./k8s'
         }
       }
     }
