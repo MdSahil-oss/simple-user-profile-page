@@ -33,7 +33,9 @@ pipeline {
       steps {
             withKubeConfig([
                         clusterName: 'minikube',
-                        namespace: 'default'
+                        namespace: 'default',
+                        contextName: 'jenkins-minikube',
+                        serverUrl:   'https://192.168.49.2:8443'
                         ]) {
             sh 'kubectl apply --validate=false -f ./k8s'
         }
