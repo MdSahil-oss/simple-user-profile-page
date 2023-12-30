@@ -38,7 +38,7 @@ pipeline {
                         serverUrl:   'https://192.168.49.2:8443',
                         credentialsId: 'k8s-creadentials'
                         ]) {
-            sh 'kubectl apply -f ./k8s'
+            sh 'kubectl delete -f ./k8s && kubectl apply -f ./k8s'
         }
       }
     }
