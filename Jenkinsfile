@@ -35,9 +35,10 @@ pipeline {
                         clusterName: 'minikube',
                         namespace: 'default',
                         contextName: 'jenkins-minikube',
-                        serverUrl:   'https://192.168.49.2:8443'
+                        serverUrl:   'https://192.168.49.2:8443',
+                        credentialsId: 'k8s-creadentials'
                         ]) {
-            sh 'kubectl apply --validate=false -f ./k8s'
+            sh 'kubectl apply -f ./k8s'
         }
       }
     }
