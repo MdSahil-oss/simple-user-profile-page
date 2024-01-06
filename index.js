@@ -6,18 +6,48 @@ require('dotenv').config();
 const app = express();
 const hostname = "http://localhost"
 const port = 3000;
-const mongoURL = process.env.DATABASE_URL
-
+let mongoUrlDocker = process.env.DATABASE_URL
 
 app.use(express.json());
 app.use(express.static(path.join(__dirname, 'public')))
 
-// Only used when app is run locally on the system otherwhise use `mongoUrlDocker` when running app as docker image
-let mongoUrlLocal = "mongodb://admin:password@localhost:27017";
+// Uncomment when monogo is run locally on the system otherwhise leave it commented out 
+// ************************************CODE**********************************************
+// mongoUrlDocker = "mongodb://admin:password@localhost:27017";
+// ************************************CODE END**********************************************
+
+
+// Uncomment when secret has to be fetched from Vault secret manager.
+// **********************************************CODE*********************************************
+// // Stored credentials are: `username` & `password`
+// // key-value secret engine version is `v1`
+// let mountPath = 'mongo'
+// let secretName = 'mongo'
+// let vaultToken = 'hvs.qsX3We7dSyp8eiVFujSAkT0K'
+// let vaultAddr = 'http://localhost:8200'
+
+// function getCred() {
+//     fetch(`${vaultAddr}/${'v1'}/${mountPath}/${secretName}`, {
+//         method: "GET",
+//         headers: {
+//             "X-Vault-Request": "true",
+//             "X-Vault-Token": vaultToken
+//         },
+//     }).then((res) => {
+//         return res.json()
+//     }).then((resJson) => {
+//         const username = resJson["data"]["username"];
+//         const  password = resJson["data"]["password"];
+//         // mongoUrlDocker = `mongodb://${username}:${password}@localhost:27017`;
+//         mongoUrlDocker = `mongodb://${username}:${password}@mongodb:27017`;
+//     }).catch(err => {
+//         console.error(err);
+//     });
+// }
+// getCred();
+// ******************************************CODE END**********************************************
 
 // use when starting application as docker container
-let mongoUrlDocker = "mongodb://admin:password@mongodb";
-
 // pass these options to mongo client connect request to avoid DeprecationWarning for current Server Discovery and Monitoring engine
 let mongoClientOptions = { useNewUrlParser: true, useUnifiedTopology: true };
 
@@ -52,23 +82,23 @@ app.patch('/api/updateData', (req, res) => {
     let userObj = req.body;
 
     MongoClient.connect(mongoUrlDocker, mongoClientOptions, function (err, client) {
-      if (err) throw err;
-  
-      let db = client.db(databaseName);
-      userObj['userid'] = 1;
-  
-      let myquery = { userid: 1 };
-      let newvalues = { $set: userObj };
-  
-      db.collection("users").updateOne(myquery, newvalues, {upsert: true}, function(err, res) {
         if (err) throw err;
-        client.close();
-      });
-  
+
+        let db = client.db(databaseName);
+        userObj['userid'] = 1;
+
+        let myquery = { userid: 1 };
+        let newvalues = { $set: userObj };
+
+        db.collection("users").updateOne(myquery, newvalues, { upsert: true }, function (err, res) {
+            if (err) throw err;
+            client.close();
+        });
+
     });
     // Send response
     res.send(userObj);
-  
+
 })
 
 app.listen(port, () => {

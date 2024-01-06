@@ -1,6 +1,6 @@
 services:
   simple-user-profile-page:
-    image: mdsahiloss/simple-user-profile-page:1.1
+    image: test-sup:latest
     ports:
       - 3000:3000
   mongodb:
